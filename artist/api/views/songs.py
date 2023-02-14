@@ -4,6 +4,9 @@ from app.models import Song
 
 
 class SongViewSet(ListCreateViewSet):
+    """
+    Создание песни и отображение списка песен
+    """
     queryset = Song.objects.all()
 
     def get_serializer_class(self):

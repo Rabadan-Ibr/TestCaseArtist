@@ -4,6 +4,9 @@ from rest_framework.exceptions import ValidationError
 
 
 def max_year(data):
+    """
+    Валидация максимального значения года.
+    """
     message = 'the year cannot be longer than the current one'
     if data.get('year') > date.today().year:
         raise ValidationError({'year': message})
@@ -11,6 +14,9 @@ def max_year(data):
 
 
 def songs_validator(data):
+    """
+    Валидация на уникальность песен и позиции указанных при создании альбома.
+    """
     songs_data = data.get('songs_m2m')
     songs_set, positions_set = set(), set()
     for song_data in songs_data:

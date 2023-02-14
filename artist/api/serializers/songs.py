@@ -1,9 +1,12 @@
 from rest_framework import serializers
 
-from app.models import Artist, Song, SongAlbumM2M
+from app.models import Artist, Song
 
 
 class SongCreateSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для создания песни.
+    """
     title = serializers.CharField(max_length=150)
     artist = serializers.PrimaryKeyRelatedField(queryset=Artist.objects.all())
 
@@ -13,23 +16,20 @@ class SongCreateSerializer(serializers.ModelSerializer):
 
 
 class SongArtistSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор исполнителя при отображении песни.
+    """
     class Meta:
         model = Artist
         fields = ('id', 'name')
 
 
 class SongSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор отображения песни.
+    """
     artist = SongArtistSerializer()
 
     class Meta:
         model = Song
         fields = ('title', 'artist')
-
-
-class SongViaAlbumSerializer(serializers.ModelSerializer):
-    title = serializers.CharField(source='song.title', read_only=True)
-    position = serializers.IntegerField(read_only=True)
-
-    class Meta:
-        model = SongAlbumM2M
-        fields = ('title', 'position')

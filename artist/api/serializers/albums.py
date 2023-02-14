@@ -5,10 +5,23 @@ from rest_framework.validators import UniqueTogetherValidator
 from api.validators import max_year, songs_validator
 from app.models import Album, Artist, Song, SongAlbumM2M
 
-from .songs import SongViaAlbumSerializer
+
+class SongViaAlbumSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор песни для отображения в альбоме.
+    """
+    title = serializers.CharField(source='song.title', read_only=True)
+    position = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = SongAlbumM2M
+        fields = ('title', 'position')
 
 
 class AlbumSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор отображения альбома, вместе со списком песен и их нумерацией.
+    """
     title = serializers.CharField(max_length=150, read_only=True)
     artist = serializers.CharField(source='artist.name', read_only=True)
     year = serializers.IntegerField(read_only=True)
@@ -24,6 +37,10 @@ class AlbumSerializer(serializers.ModelSerializer):
 
 
 class AlbumSongsPositionsSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для валидации списка песен с их позицией,
+    при создании альбома.
+    """
     song = serializers.PrimaryKeyRelatedField(
         queryset=Song.objects.all(),
         source='song.id',
@@ -36,6 +53,9 @@ class AlbumSongsPositionsSerializer(serializers.ModelSerializer):
 
 
 class AlbumCreateSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для создания альбома.
+    """
     title = serializers.CharField(max_length=150)
     year = serializers.IntegerField()
     artist = serializers.PrimaryKeyRelatedField(queryset=Artist.objects.all())

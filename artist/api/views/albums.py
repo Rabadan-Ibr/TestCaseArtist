@@ -4,6 +4,9 @@ from app.models import Album
 
 
 class AlbumViewSet(ListCreateViewSet):
+    """
+    Создание альбома и отображение списка альбомов.
+    """
     queryset = Album.objects.all()
 
     def get_serializer_class(self):

@@ -4,6 +4,9 @@ from app.models import Artist
 
 
 class ArtistViewSet(ListCreateViewSet):
+    """
+    Создание исполнителя и отображение списка исполнителей.
+    """
     queryset = Artist.objects.all()
 
     def get_serializer_class(self, *args, **kwargs):

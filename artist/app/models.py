@@ -4,7 +4,7 @@ from app.utils import year_max
 
 
 class Artist(models.Model):
-    name = models.CharField(verbose_name='artist Name', max_length=150)
+    name = models.CharField(verbose_name='artist name', max_length=150)
 
     class Meta:
         ordering = ('name',)

@@ -39,3 +39,5 @@ docker-compose exec web python manage.py loaddata db.json
 Для админки:\
 Логин: admin\
 Пароль: admin
+
+Документация: http://127.0.0.1/docs/

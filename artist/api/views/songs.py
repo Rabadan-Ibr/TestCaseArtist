@@ -7,7 +7,7 @@ class SongViewSet(ListCreateViewSet):
     """
     Создание песни и отображение списка песен
     """
-    queryset = Song.objects.all()
+    queryset = Song.objects.select_related('artist')
 
     def get_serializer_class(self):
         if self.request.method == 'POST':

@@ -7,7 +7,7 @@ class ArtistViewSet(ListCreateViewSet):
     """
     Создание исполнителя и отображение списка исполнителей.
     """
-    queryset = Artist.objects.all()
+    queryset = Artist.objects.prefetch_related('albums__songs_m2m__song')
 
     def get_serializer_class(self, *args, **kwargs):
         if self.request.method == 'POST':

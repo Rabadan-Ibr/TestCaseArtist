@@ -7,7 +7,9 @@ class AlbumViewSet(ListCreateViewSet):
     """
     Создание альбома и отображение списка альбомов.
     """
-    queryset = Album.objects.all()
+    queryset = Album.objects.select_related(
+        'artist',
+    ).prefetch_related('songs_m2m__song')
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
